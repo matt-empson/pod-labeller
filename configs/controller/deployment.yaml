@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: pod-labeller
+  name: pod-labeller
+  namespace: pod-labeller
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pod-labeller
+  template:
+    metadata:
+      labels:
+        app: pod-labeller
+    spec:
+      containers:
+      - image: pod-labeller:latest
+        name: pod-labeller
+        imagePullPolicy: IfNotPresent
+        command:
+        - /controller
+        - --labels="test-label=test-value"
+      serviceAccount: pod-labeller
